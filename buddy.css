@@ -165,8 +165,11 @@ a.button:hover {
 .graph__inner-quart {
 	fill: rgba(37, 29, 41, .3);
 }
-.graph__avg {
+.graph__med {
 	fill: rgba(37, 29, 41, 1);
+}
+.graph__avg {
+	fill: #e31e89;
 }
 
 

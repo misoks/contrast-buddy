@@ -29,6 +29,9 @@ $(document).ready(function(e){
 		document.getElementById('image-name').innerHTML = this.files[0].name;
 		
 	});
+	$(".data-point").hover(function(){
+		console.log("hovered");
+	});
 });
 
 
@@ -89,23 +92,62 @@ var showResults = function () {
 	var max = getMax(lumList);
 	var min = getMin(lumList);
 	var q1 = quartile(lumList, 25);
+	var q2 = quartile(lumList, 50);
 	var q3 = quartile(lumList, 75);
 	var range = max - min;
 	var stdDev = getStandardDeviation(lumList, 2);
 	var avg = getAverageFromNumArr(lumList, 2);
 
 	// Draw range
-	d3.select("#visualizer2").append("rect").attr("x", min).attr("y", 7.5).attr("width", range).attr("height", 1).attr("class", "graph__range");
+	d3.select("#visualizer2").append("rect")
+		.attr("x", min).attr("y", 7.5)
+		.attr("width", range)
+		.attr("height", 1)
+		.attr("class", "graph__range");
 
 	//Draw inner quartiles
-	d3.select("#visualizer2").append("rect").attr("x", q1).attr("y", 2).attr("width", q3 - q1).attr("height", 12).attr("class", "graph__inner-quart");
+	d3.select("#visualizer2").append("rect")
+		.attr("x", q1).attr("y", 2)
+		.attr("width", q3 - q1)
+		.attr("height", 12)
+		.attr("class", "graph__inner-quart");
 
-	//Draw average
-	d3.select("#visualizer2").append("rect").attr("x", avg - 1).attr("y", 0).attr("width", 2).attr("height", 16).attr("class", "graph__avg");
+	//Draw median
+	d3.select("#visualizer2").append("rect")
+		.attr("x", q2 - 1)
+		.attr("y", 0)
+		.attr("width", 2)
+		.attr("height", 16)
+		.attr("class", "graph__med");
 
 	//Draw max and min
-	d3.select("#visualizer2").append("rect").attr("x", min).attr("y", 2).attr("width", 2).attr("height", 12).attr("class", "graph__avg");
-	d3.select("#visualizer2").append("rect").attr("x", max - 2).attr("y", 2).attr("width", 2).attr("height", 12).attr("class", "graph__avg");
+	d3.select("#visualizer2").append("rect")
+		.attr("x", min)
+		.attr("y", 2)
+		.attr("width", 2)
+		.attr("height", 12)
+		.attr("class", "graph__med");
+	d3.select("#visualizer2").append("rect")
+		.attr("x", max - 2).attr("y", 2)
+		.attr("width", 2)
+		.attr("height", 12)
+		.attr("class", "graph__med");
+
+	//Draw mean
+	d3.select("#visualizer2").append("rect")
+		.attr("x", avg - 2)
+		.attr("y", 6)
+		.attr("width", 4)
+		.attr("height", 4)
+		.attr("class", "data-point graph__avg")
+		.attr("data-value", avg)
+		.attr("data-name", "Mean")
+		.on('mouseover',function() {
+			hoverStart(this)
+		})
+      	.on('mouseout',function() {
+      		hoverEnd(this)
+      	});
 
 
 	document.getElementById('lum-max').innerHTML = max;
@@ -120,7 +162,14 @@ var showResults = function () {
 	uniqueLums = [];
 	return false;
 }
-
+var hoverStart = function(elem) {
+	var value = $(elem).attr("data-value");
+	var name = $(elem).attr("data-name");
+	
+}
+var hoverEnd = function(elem) {
+	console.log(elem);
+}
 var countLums = function(uniqueLums) {
 	var count = 0;
 	var instanceArr = Array();
