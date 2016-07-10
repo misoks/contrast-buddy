@@ -88,6 +88,8 @@ var showResults = function () {
 
 	var max = getMax(lumList);
 	var min = getMin(lumList);
+	var q1 = quartile(lumList, 25);
+	var q3 = quartile(lumList, 75);
 	var range = max - min;
 	var stdDev = getStandardDeviation(lumList, 2);
 	var avg = getAverageFromNumArr(lumList, 2);
@@ -96,7 +98,7 @@ var showResults = function () {
 	d3.select("#visualizer2").append("rect").attr("x", min).attr("y", 7.5).attr("width", range).attr("height", 1).attr("class", "graph__range");
 
 	//Draw inner quartiles
-	d3.select("#visualizer2").append("rect").attr("x", avg - stdDev).attr("y", 2).attr("width", stdDev * 2).attr("height", 12).attr("class", "graph__inner-quart");
+	d3.select("#visualizer2").append("rect").attr("x", q1).attr("y", 2).attr("width", q3 - q1).attr("height", 12).attr("class", "graph__inner-quart");
 
 	//Draw average
 	d3.select("#visualizer2").append("rect").attr("x", avg - 1).attr("y", 0).attr("width", 2).attr("height", 16).attr("class", "graph__avg");
@@ -162,6 +164,12 @@ var getMin = function(numArr) {
 	}
 	return min;
 }
+var quartile =  function(array, percent){ /** @param percent - pass 25 for lower quartile, 75 for upper, 50 for mean. Defaults to 50 */
+     if (!percent) percent = 50;
+     array = array.sort(function(a, b){return a-b});
+     var n = Math.round(array.length * percent / 100);
+     return array[n];
+ }
 var getVariance = function( numArr, numOfDec ){
 	if( !isArray(numArr) ){ return false; }
 	var avg = getAverageFromNumArr( numArr, numOfDec ), 
