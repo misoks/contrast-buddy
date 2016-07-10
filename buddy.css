@@ -156,7 +156,7 @@ a.button:hover {
 }
 .graph__dot {
 	fill: rgb(37, 29, 41);
-	opacity: .007;
+	opacity: .015;
 	stroke: none;
 }
 .graph__range {
