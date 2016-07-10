@@ -24,12 +24,14 @@
 			<p>Contrast Buddy analyzes the colors in a given image and spits out some statistics on their relative luminance. You can use this data to get a quantitative idea about the image's internal contrast, number of unique luminances, and overall vibrance.</p>
 			
 			<form id="uploadimage" class="upload-image" action="" method="post" enctype="multipart/form-data">
-				<label class="field field--stacked" style="margin-bottom:0">
+				
+				<div style="display: flex; justify-content: space-between;">
 					<input type="file" name="file" id="file" required class="file-input" />
-					<span class="label">Upload Image</span>
-					<span class="image-name label" id="image-name" style="">No image uploaded</span>
-				</label>
-				<button type="submit" class="submit primary-action" id="test-button" style="display: none">Analyze It, Contrast Buddy!</button>
+					<label class="label" for="file">Upload Image</label>
+						
+					<button type="submit" class="submit primary-action" id="test-button" style="display: none">Analyze It, Contrast Buddy!</button>
+				</div>
+				<p class="image-name label" id="image-name" style="">No image uploaded</p>
 				<img class="prev-img" src="" id="prev-img" style="display: none">
 			</form>
 			
