@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Contrast Buddy</title>
+	<meta name="viewport" content="width=device-width">
+	<link rel="shortcut icon" href="favicon.png" />
+	<link rel="apple-touch-icon" href="apple-touch-icon.png">
+	<link rel="stylesheet" href="buddy.css">
+	<script type="text/javascript" src="jquery-3.0.0.js"></script>
+	<script type="text/javascript" src="d3.min.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+</head>
+<body>
+	<header>
+		<img src="buddy-small.gif" style="position: absolute; left: 2rem; top: .75rem">
+		<h1 style="margin-left: 50px;">Contrast Buddy</h1>
+	</header>
+	<div class="overlay" id="overlay" style="display: none;">
+		<div><img src="buddy.gif" style="margin-top: -6rem"></div>
+		<p style="" >Analyzing image...</p>
+	</div>
+	<article class="columns">
+		<div class="panel panel--input">
+			<p>Contrast Buddy analyzes the colors in a given image and spits out some statistics on their relative luminance. You can use this data to get a quantitative idea about the image's internal contrast, number of unique luminances, and overall vibrance.</p>
+			
+			<form id="uploadimage" class="upload-image" action="" method="post" enctype="multipart/form-data">
+				<label class="field field--stacked" style="margin-bottom:0">
+					<input type="file" name="file" id="file" required class="file-input" />
+					<span class="label">Upload Image</span>
+					<span class="image-name label" id="image-name" style="">No image uploaded</span>
+				</label>
+				<button type="submit" class="submit primary-action" id="test-button" style="display: none">Analyze It, Contrast Buddy!</button>
+				<img class="prev-img" src="" id="prev-img" style="display: none">
+			</form>
+			
+			<img src="" id="test-img" style="display: none">
+		</div>
+		<div class="panel panel--results">
+			<h2>Stats</h2>
+			<label class="field field--stacked">
+				<span class="label">Unique Luminances</span>
+				<span class="value" id="lum-unique">&mdash;</span>
+			</label>
+			<label class="field field--stacked">
+				<span class="label">Maximum (lux)</span>
+				<span class="value" id="lum-max">&mdash;</span>
+			</label>
+			<label class="field field--stacked">
+				<span class="label">Minimum (lux)</span>
+				<span class="value" id="lum-min">&mdash;</span>
+			</label>
+			<label class="field field--stacked">
+				<span class="label">Average (lux)</span>
+				<span class="value" id="lum-average">&mdash;</span>
+			</label>
+			<label class="field field--stacked">
+				<span class="label">Standard Deviation (lux)</span>
+				<span class="value" id="lum-std-dev">&mdash;</span>
+			</label>
+			<label class="field field--stacked">
+				<span class="label">Variance</span>
+				<span class="value" id="lum-variance">&mdash;</span>
+			</label>
+			
+			<h2>Luminance Distribution</h2>
+			<div class="lum-dist" style="padding-bottom: 0; margin-bottom: 10px">
+				
+				<svg class="graph" id="visualizer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 16">
+					<line class="graph__axis" stroke="rgba(37, 29, 41, .3)" x1="0" y1="8" x2="255" y2="8"/>
+				</svg>
+			</div>
+			<div class="lum-dist">
+				<svg class="graph" id="visualizer2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 16">
+					<line class="graph__axis" stroke="rgba(37, 29, 41, .3)" x1="0" y1="8" x2="255" y2="8"/>
+				</svg>
+				<span class="label label--dist-dark">Dark</span>
+				<span class="label label--dist-light">Light</span>
+			</div>
+			
+
+		</div>
+	</article>
+		
+</body>
+
+</html>
