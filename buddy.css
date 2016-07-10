@@ -83,7 +83,8 @@ p:first-child {
 	display: inline-block !important;
 }
 .file-input + .label,
-button {
+button,
+a.button {
 	display: inline-block;
 	font-size: 1rem !important;
 	cursor: pointer;
@@ -102,6 +103,7 @@ button {
 	color: rgb(37, 29, 41);
 	fill: rgb(37, 29, 41);
 	transition: all .3s ease;
+	text-decoration: none;
 }
 .primary-action,
 .file-input + .label.primary-action {
@@ -111,7 +113,8 @@ button {
 }
 
 .file-input + .label:hover,
-button:hover {
+button:hover,
+a.button:hover {
 	color: white;
 	fill: white;
 	background-color: rgba(37, 29, 41, .8);
