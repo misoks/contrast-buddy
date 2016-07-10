@@ -54,7 +54,7 @@ var startProcessing = function (callback) {
 }
 var analyze = function() {
 	var pixel;
-	var densityMod = Math.round(Math.sqrt(imageSize) / 200);
+	var densityMod = Math.round(Math.sqrt(imageSize) / 100);
 	if (densityMod < 1) densityMod = 1;
 
 	for (var y = 1; y < (canvas.height); y = y+densityMod) {
