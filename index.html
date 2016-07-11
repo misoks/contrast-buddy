@@ -12,7 +12,7 @@
 </head>
 <body>
 	<header>
-		<img src="buddy-small.gif" style="position: absolute; left: 2rem; top: .75rem">
+		<img src="buddy-small.gif" style="position: absolute; left: 2rem; top: .75rem; z-index: 5">
 		<h1 style="margin-left: 50px;">Contrast Buddy</h1>
 	</header>
 	<div class="overlay" id="overlay" style="display: none;">
@@ -25,9 +25,11 @@
 			
 			<form id="uploadimage" class="upload-image" action="" method="post" enctype="multipart/form-data">
 				
-				<div style="display: flex; justify-content: space-between;">
-					<input type="file" name="file" id="file" required class="file-input" />
-					<label class="label" for="file">Upload Image</label>
+				<div style="display: flex; justify-content: space-between; align-content: flex-start;">
+					<div style="flex-grow: 1">
+						<input type="file" name="file" id="file" required class="file-input" />
+						<label class="label" for="file">Upload Image</label>
+					</div>
 						
 					<button type="submit" class="submit primary-action" id="test-button" style="display: none">Analyze It, Contrast Buddy!</button>
 				</div>
