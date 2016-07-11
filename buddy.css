@@ -116,7 +116,7 @@ button:hover,
 a.button:hover {
 	color: white;
 	fill: white;
-	background-color: rgba(37, 29, 41, .8);
+	background-color: rgba(37, 29, 41, 1);
 	cursor: pointer !important;
 }
 .primary-action:hover,
