@@ -28,23 +28,28 @@
 				<div style="display: flex; justify-content: space-between; align-content: flex-start;">
 					<div style="flex-grow: 1">
 						<input type="file" name="file" id="file" required class="file-input" />
-						<label class="label" for="file">Upload Image</label>
+						<label class="label" for="file">Choose Image</label>
 					</div>
 						
-					<button type="submit" class="submit primary-action" id="test-button" style="display: none">Analyze It, Contrast Buddy!</button>
+					<div id="test-area" style="display: none">
+						<button type="submit" class="submit primary-action" id="test-button" >Analyze It, Contrast Buddy!</button>
+						<label style="font-size: 1rem; margin-top: .75rem; display: block; text-align: center" title="Don't count colors that comprise more than 25% of the screen"><input type="checkbox" id="exclude-bg">Exclude Background Colors</label>
+					</div>
 				</div>
+
 				<p class="image-name label" id="image-name" style="">No image uploaded</p>
 				<img class="prev-img" src="" id="prev-img" style="display: none">
 			</form>
 			
 			<img src="" id="test-img" style="display: none">
 
-			<div style="text-align: center; position: absolute; bottom: 1rem; width: calc(50% - 4rem);">
+			<!--<div style="text-align: center; position: absolute; bottom: 1rem; width: calc(50% - 4rem);">
 				<a class="button" href="https://github.com/misoks/contrast-buddy" >Fork on Github</a>
-			</div>
+			</div>-->
 		</div>
 		<div class="panel panel--results">
 			<h2>Stats</h2>
+			<p class="message" id="results-message" style="display:none; color: #e31e89"></p>
 			<label class="field field--stacked">
 				<span class="label">Unique Luminances</span>
 				<span class="value" id="lum-unique">&mdash;</span>

@@ -6,6 +6,7 @@ var imageSize;
 var lumList = Array();
 var uniqueLums = Array();
 var instanceArr = Array();
+var excludeBGs = false;
 
 $(document).ready(function(e){
 	$("#uploadimage").on('submit',(function(e) {
@@ -36,7 +37,7 @@ $(document).ready(function(e){
 
 
 var imageIsLoaded = function(e) {
-	$('#test-button').show(50);
+	$('#test-area').show(50);
 
 	$('#test-img').attr('src', e.target.result);
 	$('#prev-img').attr('src', e.target.result);
@@ -47,6 +48,13 @@ var imageIsLoaded = function(e) {
 var testImage = function() {
 	d3.select("#visualizer").selectAll("circle").remove();
 	d3.select("#visualizer2").selectAll("rect").remove();
+	document.getElementById("results-message").innerHTML = "";
+	$("#results-message").hide();
+	if ($("#exclude-bg").is(":checked")) {
+		excludeBGs = true;
+	} else {
+		excludeBGs = false;
+	}
 	startProcessing(analyze);
 	return false;
 }
@@ -79,14 +87,66 @@ var analyze = function() {
 	return false;
 }
 
+var removeBackgrounds = function () {
+	var instances;
+	var excludedLums = Array();
+	var newLumList = Array();
+	var total = lumList.length;
+	var lum;
+
+	for (var lum = 0; lum < uniqueLums.length; lum++) {
+		instances = uniqueLums[lum];
+		
+		if (instances > 0) {
+			if ((instances / total) > .25) excludedLums.push(lum);
+		}
+	}
+
+	for (var i = 0; i < lumList.length; i++) {
+		lum = lumList[i];
+		if (excludedLums.indexOf(lum) > -1) {
+			continue;
+		} else {
+			newLumList.push(lum);
+		}
+	}
+	lumList = [];
+	return newLumList;
+}
+
 var showResults = function () {
+	if (excludeBGs) {
+		lumList = removeBackgrounds();
+	}
 	var jitter;
 	var lum;
+
+	var opacity = 100 / lumList.length;
+	if (lumList.length < 1) {
+		d3.select("#visualizer").selectAll("circle").remove();
+		d3.select("#visualizer2").selectAll("rect").remove();
+		document.getElementById("results-message").innerHTML = "No luminances found! Try unchecking Exclude Background Colors and run the test again.";
+		document.getElementById('lum-max').innerHTML = "&mdash;";
+		document.getElementById('lum-min').innerHTML = "&mdash;";
+		document.getElementById('lum-unique').innerHTML = "&mdash;";
+		document.getElementById('lum-average').innerHTML = "&mdash;";
+		document.getElementById('lum-variance').innerHTML = "&mdash;";
+		document.getElementById('lum-std-dev').innerHTML = "&mdash;";
+		$("#results-message").fadeIn(200);
+		endDisplayResults();
+		return false;
+	}
+
 	for (var i = 0; i < lumList.length; i = i+2) {
 		jitter = Math.floor((Math.random() * 12)) - 6;
 		lum = lumList[i];
 		if (lum < 4) lum = lum + 4;
-		d3.select("#visualizer").append("circle").attr("cx", lum - 2).attr("cy", 8 + jitter).attr("r", 2).attr("class", "graph__dot");
+		d3.select("#visualizer").append("circle")
+			.attr("cx", lum - 2)
+			.attr("cy", 8 + jitter)
+			.attr("r", 2)
+			.attr("class", "graph__dot")
+			.style("opacity", opacity);
 	}
 
 	var max = getMax(lumList);
@@ -114,31 +174,32 @@ var showResults = function () {
 
 	//Draw median
 	d3.select("#visualizer2").append("rect")
-		.attr("x", q2 - 1)
+		.attr("x", q2 - .5)
 		.attr("y", 0)
-		.attr("width", 2)
+		.attr("width", 1)
 		.attr("height", 16)
 		.attr("class", "graph__med");
 
 	//Draw max and min
 	d3.select("#visualizer2").append("rect")
 		.attr("x", min)
-		.attr("y", 2)
-		.attr("width", 2)
-		.attr("height", 12)
+		.attr("y", 4)
+		.attr("width", 1)
+		.attr("height", 8)
 		.attr("class", "graph__med");
 	d3.select("#visualizer2").append("rect")
-		.attr("x", max - 2).attr("y", 2)
-		.attr("width", 2)
-		.attr("height", 12)
+		.attr("x", max - 1)
+		.attr("y", 4)
+		.attr("width", 1)
+		.attr("height", 8)
 		.attr("class", "graph__med");
 
 	//Draw mean
 	d3.select("#visualizer2").append("rect")
-		.attr("x", avg - 2)
-		.attr("y", 6)
-		.attr("width", 4)
-		.attr("height", 4)
+		.attr("x", avg - .5)
+		.attr("y", 0)
+		.attr("width", 1)
+		.attr("height", 16)
 		.attr("class", "data-point graph__avg")
 		.attr("data-value", avg)
 		.attr("data-name", "Mean")
@@ -156,11 +217,15 @@ var showResults = function () {
 	document.getElementById('lum-average').innerHTML = avg;
 	document.getElementById('lum-variance').innerHTML = Math.round(getVariance(lumList, 0));
 	document.getElementById('lum-std-dev').innerHTML = stdDev;
+
+	endDisplayResults();
+	return false;
+}
+var endDisplayResults = function() {
 	$("#overlay").fadeOut(400);
 	lumList = [];
 	instanceArr = [];
 	uniqueLums = [];
-	return false;
 }
 var hoverStart = function(elem) {
 	var value = $(elem).attr("data-value");
@@ -200,6 +265,7 @@ var getAverageFromNumArr = function( numArr, numOfDec ){
 	return getNumWithSetDec( (sum / numArr.length ), numOfDec );
 }
 var getMax = function(numArr) {
+	if (numArr.length < 1) return false;
 	var max = 0;
 	for (var i = 0; i < numArr.length; i++) {
 		if (numArr[i] > max) max = numArr[i];
@@ -207,6 +273,7 @@ var getMax = function(numArr) {
 	return max;
 }
 var getMin = function(numArr) {
+	if (numArr.length < 1) return false;
 	var min = 100000000;
 	for (var i = 0; i < numArr.length; i++) {
 		if (numArr[i] < min) min = numArr[i];
