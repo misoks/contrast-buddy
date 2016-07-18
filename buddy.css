@@ -47,11 +47,34 @@ h2:first-child,
 p:first-child {
 	margin-top: 0;
 }
+progress {
+	/* Reset the default browser styles */
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: none;
+
+	/* Custom styles */
+	width: 400px;
+	height: 20px;
+	margin: 1em auto 0;
+
+}
+	progress::-webkit-progress-bar {
+		border-radius: 20px;
+		padding: 5px 7px;
+		background-color: rgba(255,255,255,.2);
+	}
+	progress::-webkit-progress-value {
+		border-radius: 10px;
+		background-color: #e31e89;
+	}
+
+
 .label {
 	opacity: .7;
 	font-size: .9rem;
 }
-
 .upload-image {
 	background-color: rgba(37, 29, 41,.05);
 	padding: 1rem;
@@ -131,14 +154,31 @@ a.button:hover {
 	max-width: 100%;
 	height: auto;
 }
-.lum-dist {
-	position: relative;
+.visualization {	
 	width: 100%;
 	margin: auto;
-	padding-bottom: 1em;
+	text-align: center;
+	overflow: hidden;
+    margin-bottom: 10px;
 }
-	.lum-dist svg {
+
+.visualization--color-distro {
+	background: -webkit-linear-gradient(left, #fff, #6f6f6f);
+	background: -ms-linear-gradient(left, #fff, #6f6f6f);
+	background: -moz-linear-gradient(left, #fff, #6f6f6f);
+}
+	.visualization svg {
 		width: 100%;
+	}
+	
+.legend {
+	position: relative;
+	overflow: hidden;
+    height: 20px;
+}
+	.legend .label {
+		position: absolute;
+		bottom: 0;
 	}
 	.label--dist-dark {
 		left: 0;
@@ -146,15 +186,11 @@ a.button:hover {
 	.label--dist-light {
 		right: 0;
 	}
-	.lum-dist .label {
-		position: absolute;
-		bottom: 0;
-	}
 .graph__axis {
 	stroke: rgba(0,0,0,.1);
 }
 .graph__dot {
-	fill: rgb(37, 29, 41);
+	/*fill: rgb(40, 39, 41);*/
 	stroke: none;
 }
 .graph__range {
@@ -198,10 +234,8 @@ a.button:hover {
 }
 .panel {
 	padding: 2rem;
-	max-width: 50%;
 }
 	.panel--input {
-		
 		overflow: auto;
 	}
 	.panel--results {

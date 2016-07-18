@@ -17,10 +17,11 @@
 	</header>
 	<div class="overlay" id="overlay" style="display: none;">
 		<div><img src="buddy.gif" style="margin-top: -6rem"></div>
+		<progress id="progress" value="0" max="100"></progress>
 		<p style="" >Analyzing image...</p>
 	</div>
 	<article class="columns">
-		<div class="panel panel--input">
+		<div class="panel panel--input" style="max-width: 40%">
 			<p>Contrast Buddy analyzes the colors in a given image and spits out some statistics on their relative luminance. You can use this data to get a quantitative idea about the image's internal contrast, number of unique luminances, and overall vibrance.</p>
 			
 			<form id="uploadimage" class="upload-image" action="" method="post" enctype="multipart/form-data">
@@ -33,7 +34,8 @@
 						
 					<div id="test-area" style="display: none">
 						<button type="submit" class="submit primary-action" id="test-button" >Analyze It, Contrast Buddy!</button>
-						<label style="font-size: 1rem; margin-top: .75rem; display: block; text-align: center" title="Don't count colors that comprise more than 25% of the screen"><input type="checkbox" id="exclude-bg">Exclude Background Colors</label>
+						<label style="font-size: 1rem; margin-top: .75rem; display: block; text-align: center" title="Don't count colors that comprise more than 25% of the screen"><input type="checkbox" id="exclude-bg">Exclude Backgrounds</label>
+						<!--<label style="font-size: 1rem; margin-top: .75rem; display: block; text-align: center" title="Colorizes dots in the distribution plot"><input type="checkbox" id="show-color">Show Colors in Distribution</label>-->
 					</div>
 				</div>
 
@@ -76,21 +78,24 @@
 			</label>
 			
 			<h2>Luminance Distribution</h2>
-			<div class="lum-dist" style="padding-bottom: 0; margin-bottom: 10px">
-				
-				<svg class="graph" id="visualizer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 16">
+			<div class="visualization visualization--lum-distro" id='dot-dist-container'>
+				<svg class="graph" id="lum-distro" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 16">
 					<line class="graph__axis" stroke="rgba(37, 29, 41, .3)" x1="0" y1="8" x2="255" y2="8"/>
 				</svg>
 			</div>
-			<div class="lum-dist">
-				<svg class="graph" id="visualizer2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 16">
+			<div class="visualization visualization--color-distro" id='color-dist-container'>
+				<svg class="graph" id="color-distro" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 6">
+				</svg>
+			</div>
+			<div class="visualization visualization--box-plot">
+				<svg class="graph" id="box-plot" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 16">
 					<line class="graph__axis" stroke="rgba(37, 29, 41, .3)" x1="0" y1="8" x2="255" y2="8"/>
 				</svg>
+			</div>
+			<div class="legend">
 				<span class="label label--dist-dark">Dark</span>
 				<span class="label label--dist-light">Light</span>
 			</div>
-			
-
 		</div>
 	</article>
 		
