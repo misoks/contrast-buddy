@@ -11,47 +11,79 @@
 	<script type="text/javascript" src="main.js"></script>
 </head>
 <body>
-	<header>
-		<img src="buddy-small.gif" style="position: absolute; left: 2rem; top: .75rem; z-index: 5">
-		<h1 style="margin-left: 50px;">Contrast Buddy</h1>
-	</header>
+	
 	<div class="overlay" id="overlay" style="display: none;">
 		<div><img src="buddy.gif" style="margin-top: -6rem"></div>
 		<progress id="progress" value="0" max="100"></progress>
 		<p style="" >Analyzing image...</p>
 	</div>
-	<article class="columns">
-		<div class="panel panel--input" style="max-width: 40%">
-			<p>Contrast Buddy analyzes the colors in a given image and spits out some statistics on their relative luminance. You can use this data to get a quantitative idea about the image's internal contrast, number of unique luminances, and overall vibrance.</p>
-			
-			<form id="uploadimage" class="upload-image" action="" method="post" enctype="multipart/form-data">
-				
-				<div style="display: flex; justify-content: space-between; align-content: flex-start;">
-					<div style="flex-grow: 1">
-						<input type="file" name="file" id="file" required class="file-input" />
-						<label class="label" for="file">Choose Image</label>
+	<article>
+		
+		<div class="panel columns">
+			<div class=""  style="width: 50%; max-width: 600px">
+				<header>
+					<img src="buddy-small.gif" style="position: absolute; left: 2rem; top: .75rem; z-index: 5">
+					<h1 style="margin-left: 50px;">Contrast Buddy</h1>
+				</header>
+				<p>Contrast Buddy analyzes the colors in a given image and spits out some statistics on their relative luminance. You can use this data to get a quantitative idea about the image's internal contrast, number of unique luminances, and overall vibrance.</p>
+			</div>
+			<div class="" style="width: 50%; padding-left: 20px;">
+				<form id="uploadimage" class="upload-image" action="" method="post" enctype="multipart/form-data">
+					
+					<div style="display: flex; justify-content: space-between; align-content: flex-start;">
+						<div style="flex-grow: 1;">
+							<div class="select-img-container">
+								<div class="select-img">
+									<input type="file" name="file" id="file" required class="file-input" />
+									<label class="label" for="file" id="img-select">Choose Image</label>
+									<p class="image-name label" id="image-name" style="">No image uploaded</p>
+								</div>
+								<img class="prev-img" src="" id="prev-img" style="display: none">
+							</div>
+						</div>
+							
+						<div id="test-area" style="display: none">
+							<button type="submit" class="submit primary-action" id="test-button" >Analyze It, Contrast Buddy!</button>
+							<label style="font-size: 1rem; margin-top: .75rem; display: block; text-align: center" title="Don't count colors that comprise more than 25% of the screen"><input type="checkbox" id="exclude-bg">Exclude Backgrounds</label>
+							<!--<label style="font-size: 1rem; margin-top: .75rem; display: block; text-align: center" title="Colorizes dots in the distribution plot"><input type="checkbox" id="show-color">Show Colors in Distribution</label>-->
+						</div>
 					</div>
-						
-					<div id="test-area" style="display: none">
-						<button type="submit" class="submit primary-action" id="test-button" >Analyze It, Contrast Buddy!</button>
-						<label style="font-size: 1rem; margin-top: .75rem; display: block; text-align: center" title="Don't count colors that comprise more than 25% of the screen"><input type="checkbox" id="exclude-bg">Exclude Backgrounds</label>
-						<!--<label style="font-size: 1rem; margin-top: .75rem; display: block; text-align: center" title="Colorizes dots in the distribution plot"><input type="checkbox" id="show-color">Show Colors in Distribution</label>-->
-					</div>
-				</div>
 
-				<p class="image-name label" id="image-name" style="">No image uploaded</p>
-				<img class="prev-img" src="" id="prev-img" style="display: none">
-			</form>
+					
+				</form>
 			
-			<img src="" id="test-img" style="display: none">
+				<img src="" id="test-img" style="display: none">
 
-			<!--<div style="text-align: center; position: absolute; bottom: 1rem; width: calc(50% - 4rem);">
-				<a class="button" href="https://github.com/misoks/contrast-buddy" >Fork on Github</a>
-			</div>-->
+				<!--<div style="text-align: center; position: absolute; bottom: 1rem; width: calc(50% - 4rem);">
+					<a class="button" href="https://github.com/misoks/contrast-buddy" >Fork on Github</a>
+				</div>-->
+			</div>
 		</div>
-		<div class="panel panel--results">
-			<h2>Stats</h2>
+		<div class="panel" style="background-color: white;">
+			
 			<p class="message" id="results-message" style="display:none; color: #e31e89"></p>
+			
+			
+			<!--<h2>Luminance Distribution</h2>-->
+			<div class="visualization visualization--lum-distro" id='dot-dist-container'>
+				<svg class="graph" id="lum-distro" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 16">
+					<line class="graph__axis" stroke="rgba(37, 29, 41, .3)" x1="0" y1="8" x2="255" y2="8"/>
+				</svg>
+			</div>
+			<div class="visualization visualization--color-distro" id='color-dist-container'>
+				<svg class="graph" id="color-distro" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 6">
+				</svg>
+			</div>
+			<div class="visualization visualization--box-plot">
+				<svg class="graph" id="box-plot" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 16">
+					<line class="graph__axis" stroke="rgba(37, 29, 41, .3)" x1="0" y1="8" x2="255" y2="8"/>
+				</svg>
+			</div>
+			<div class="legend">
+				<span class="label label--dist-dark">Dark</span>
+				<span class="label label--dist-light">Light</span>
+			</div>
+			<h2>Stats</h2>
 			<label class="field field--stacked">
 				<span class="label">Unique Luminances</span>
 				<span class="value" id="lum-unique">&mdash;</span>
@@ -76,26 +108,6 @@
 				<span class="label">Variance</span>
 				<span class="value" id="lum-variance">&mdash;</span>
 			</label>
-			
-			<h2>Luminance Distribution</h2>
-			<div class="visualization visualization--lum-distro" id='dot-dist-container'>
-				<svg class="graph" id="lum-distro" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 16">
-					<line class="graph__axis" stroke="rgba(37, 29, 41, .3)" x1="0" y1="8" x2="255" y2="8"/>
-				</svg>
-			</div>
-			<div class="visualization visualization--color-distro" id='color-dist-container'>
-				<svg class="graph" id="color-distro" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 6">
-				</svg>
-			</div>
-			<div class="visualization visualization--box-plot">
-				<svg class="graph" id="box-plot" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 16">
-					<line class="graph__axis" stroke="rgba(37, 29, 41, .3)" x1="0" y1="8" x2="255" y2="8"/>
-				</svg>
-			</div>
-			<div class="legend">
-				<span class="label label--dist-dark">Dark</span>
-				<span class="label label--dist-light">Light</span>
-			</div>
 		</div>
 	</article>
 		

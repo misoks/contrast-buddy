@@ -36,6 +36,7 @@ $(document).ready(function(e){
 
 		reader.readAsDataURL(this.files[0]);
 		document.getElementById('image-name').innerHTML = this.files[0].name;
+		document.getElementById("img-select").innerHTML = "Change Image";
 		
 	});
 	$(".data-point").hover(function(){
