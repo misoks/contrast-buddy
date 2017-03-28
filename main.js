@@ -322,6 +322,7 @@ var showResults = function () {
 	return false;
 }
 var endDisplayResults = function() {
+	$("#results-pane").fadeIn(400);
 	$("#overlay").fadeOut(400);
 	leftX = 1;
 	leftY = 1;

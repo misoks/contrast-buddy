@@ -20,14 +20,14 @@
 	<article>
 		
 		<div class="panel columns">
-			<div class=""  style="width: 50%; max-width: 600px">
+			<div class=""  style="width: 40%; max-width: 600px">
 				<header>
 					<img src="buddy-small.gif" style="position: absolute; left: 2rem; top: .75rem; z-index: 5">
 					<h1 style="margin-left: 50px;">Contrast Buddy</h1>
 				</header>
 				<p>Contrast Buddy analyzes the colors in a given image and spits out some statistics on their relative luminance. You can use this data to get a quantitative idea about the image's internal contrast, number of unique luminances, and overall vibrance.</p>
 			</div>
-			<div class="" style="width: 50%; padding-left: 20px;">
+			<div class="" style="width: 60%; padding-left: 20px;">
 				<form id="uploadimage" class="upload-image" action="" method="post" enctype="multipart/form-data">
 					
 					<div style="display: flex; justify-content: space-between; align-content: flex-start;">
@@ -59,7 +59,7 @@
 				</div>-->
 			</div>
 		</div>
-		<div class="panel" style="background-color: white;">
+		<div class="panel" id="results-pane" style="background-color: white; display: none;">
 			
 			<p class="message" id="results-message" style="display:none; color: #e31e89"></p>
 			
@@ -84,30 +84,32 @@
 				<span class="label label--dist-light">Light</span>
 			</div>
 			<h2>Stats</h2>
-			<label class="field field--stacked">
-				<span class="label">Unique Luminances</span>
-				<span class="value" id="lum-unique">&mdash;</span>
-			</label>
-			<label class="field field--stacked">
-				<span class="label">Maximum (lux)</span>
-				<span class="value" id="lum-max">&mdash;</span>
-			</label>
-			<label class="field field--stacked">
-				<span class="label">Minimum (lux)</span>
-				<span class="value" id="lum-min">&mdash;</span>
-			</label>
-			<label class="field field--stacked">
-				<span class="label">Average (lux)</span>
-				<span class="value" id="lum-average">&mdash;</span>
-			</label>
-			<label class="field field--stacked">
-				<span class="label">Standard Deviation (lux)</span>
-				<span class="value" id="lum-std-dev">&mdash;</span>
-			</label>
-			<label class="field field--stacked">
-				<span class="label">Variance</span>
-				<span class="value" id="lum-variance">&mdash;</span>
-			</label>
+			<div style="display: flex; justify-content: space-between;">
+				<label class="field field--stacked">
+					<span class="label">Unique Luminances</span>
+					<span class="value" id="lum-unique">&mdash;</span>
+				</label>
+				<label class="field field--stacked">
+					<span class="label">Maximum (lux)</span>
+					<span class="value" id="lum-max">&mdash;</span>
+				</label>
+				<label class="field field--stacked">
+					<span class="label">Minimum (lux)</span>
+					<span class="value" id="lum-min">&mdash;</span>
+				</label>
+				<label class="field field--stacked">
+					<span class="label">Average (lux)</span>
+					<span class="value" id="lum-average">&mdash;</span>
+				</label>
+				<label class="field field--stacked">
+					<span class="label">Standard Deviation (lux)</span>
+					<span class="value" id="lum-std-dev">&mdash;</span>
+				</label>
+				<label class="field field--stacked">
+					<span class="label">Variance</span>
+					<span class="value" id="lum-variance">&mdash;</span>
+				</label>
+			</div>
 		</div>
 	</article>
 		
