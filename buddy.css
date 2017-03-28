@@ -107,6 +107,7 @@ progress {
 }
 .prev-img {
 	height: auto;
+	border-radius: 4px;
 }
 .select-img {
 	z-index: 2;
@@ -136,6 +137,10 @@ a.button {
 	transition: all .3s ease;
 	text-decoration: none;
 	text-align: center;
+
+	border-color: white;
+	color: white;
+	background-color: transparent;
 }
 .file-input + .label {
 	width: 100%;
@@ -156,6 +161,9 @@ a.button:hover {
 	fill: white;
 	background-color: rgba(37, 29, 41, .9);
 	cursor: pointer !important;
+}
+.file-input + .label:hover {
+	background-color: rgba(227, 30, 137,.5);
 }
 .primary-action:hover,
 .file-input + .label.primary-action:hover {
